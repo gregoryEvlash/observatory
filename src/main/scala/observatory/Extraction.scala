@@ -65,6 +65,14 @@ object Extraction {
       .reduceByKey{ case ((n, t), (n2, t2)) =>
           (n + n2, t + t2)
       }
-      .mapValues{case (c, t) => t / c}
+      .mapValues{case (c, t) => toCelsius(t / c)}
+  }
+
+  def toCelsius(f: Double) = {
+    if(f == 32)
+      -17.778
+    else
+    (f - 32) / 1.8
+
   }
 }

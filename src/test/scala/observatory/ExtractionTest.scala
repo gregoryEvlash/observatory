@@ -12,6 +12,10 @@ trait ExtractionTest extends FunSuite {
     "/Users/grigoriy.evlash/projects/observatory/src/test/resources/2015.csv"
   )
 
-  println(z)
+  val s = Extraction.locationYearlyAverageRecords(z)
+
+
+  println(s)
+
   
 }

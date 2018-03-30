@@ -1,11 +1,28 @@
 package observatory
 
+import java.time.LocalDate
+
+import scala.util.Try
+
 /**
   * Introduced in Week 1. Represents a location on the globe.
+ *
   * @param lat Degrees of latitude, -90 ≤ lat ≤ 90
   * @param lon Degrees of longitude, -180 ≤ lon ≤ 180
   */
 case class Location(lat: Double, lon: Double)
+
+object Location{
+  def toLocation(a: String, b: String): Option[Location] = {
+    Try{
+      Location(a.toDouble, b.toDouble)
+    }.toOption
+  }
+}
+
+case class Station(stn: String, wban: String, location: Option[Location])
+
+case class Temps(stn: String, wban: String, date: LocalDate, temp: Temperature)
 
 /**
   * Introduced in Week 3. Represents a tiled web map tile.

@@ -42,7 +42,7 @@ object Extraction {
           case stn :: wban :: month :: day :: temp :: Nil =>
             val t = Try(temp.toDouble).getOrElse(9999.9)
             val d = LocalDate.of(year, month.toInt, day.toInt)
-            (stn, wban) ->  (d, t)
+            ((stn, wban), (d, t))
       }
     }
 
@@ -60,9 +60,11 @@ object Extraction {
   }
 
   def sparkAverageRecords(records: RDD[(LocalDate, Location, Temperature)]): RDD[(Location, Temperature)] = {
-//    records.
-
-
-    ??? // actual work done here
+    records
+      .map{ case (_, l, t) => (l, (1, t))}
+      .reduceByKey{ case ((n, t), (n2, t2)) =>
+          (n + n2, t + t2)
+      }
+      .mapValues{case (c, t) => t / c}
   }
 }
